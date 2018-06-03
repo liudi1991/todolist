@@ -1,7 +1,7 @@
 <template>
   <div :class="['todo-item', todo.completed ? 'completed' : '']">
     <input type="checkbox" class="toggle" v-model="todo.completed">
-    <label>{{todo.content}}</label>
+    <label v-bind:title="todo.content">{{todo.content}}</label>
     <button class="destroy" @click="deleteTodo"></button>
   </div>
 
@@ -17,8 +17,8 @@ export default {
     }
   },
   methods: {
-    deleteTodo: function(index) {
-      this.$emit("deleteItem",this.todo.id)
+    deleteTodo: function() {
+      this.$emit("deleteItem", this.todo.id);
     }
   }
 };

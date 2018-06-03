@@ -1,12 +1,9 @@
 <template>
-  
-    <section class="real-app">
-      <input type="text" class="add-input" autofocus="autofocus" placeholder="接下来想要做什么？" @keyup.enter="addItem">
-      <item v-for="todo of unfinishedList" :key="todo.id" :todo="todo" @deleteItem="deleteItem"></item>
-      <tabs :filter="filter" :todolist="todolist" @toggleFilter="toggleFilter" @clearAllCompleted="clearAllCompleted"></tabs>
-    </section>
-    
-
+  <section class="real-app">
+    <input type="text" class="add-input" autofocus="autofocus" placeholder="接下来想要做什么？" @keyup.enter="addItem">
+    <item v-for="todo of unfinishedList" :key="todo.id" :todo="todo" @deleteItem="deleteItem"></item>
+    <tabs :filter="filter" :todolist="todolist" @toggleFilter="toggleFilter" @clearAllCompleted="clearAllCompleted"></tabs>
+  </section>
 </template>
 
 <script>
@@ -19,14 +16,14 @@ export default {
     item,
     tabs
   },
-  data: function() {
+  data() {
     return {
       todolist: [],
       filter: "all"
     };
   },
   computed: {
-    unfinishedList: function() {
+    unfinishedList() {
       if (this.filter === "all") {
         return this.todolist;
       }
@@ -35,10 +32,10 @@ export default {
     }
   },
   methods: {
-    addItem: function(e) {
+    addItem(e) {
       let inputValue = e.target.value;
       if (inputValue) {
-        this.todolist.push({
+        this.todolist.unshift({
           id: id++,
           content: e.target.value.trim(),
           completed: false
@@ -46,13 +43,13 @@ export default {
       }
       e.target.value = "";
     },
-    deleteItem: function(id) {
+    deleteItem(id) {
       this.todolist.splice(this.todolist.findIndex(item => item.id === id), 1);
     },
-    toggleFilter: function(state) {
+    toggleFilter(state) {
       this.filter = state;
     },
-    clearAllCompleted: function() {
+    clearAllCompleted() {
       this.todolist = this.todolist.filter(item => !item.completed);
     }
   }
